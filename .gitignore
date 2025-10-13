@@ -30,3 +30,6 @@ experiments*.tar.gz
 experiments*/*
 *.pdf
 hostfile*
+
+# macOS
+.DS_Store
