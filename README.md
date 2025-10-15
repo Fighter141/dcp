@@ -2,6 +2,8 @@
 
 DCP is a context parallel training library designed for dynamic model input lengths and attention masks. It introduces fine-grained blockwise partitioning of both data and computation, enables flexible mapping of data and computation blocks to any device, and optimizes such mapping through a hypergraph partitioning framework.
 
+For more details on the design, please see our SOSP'25 paper: [DCP: Addressing Input Dynamism In Long-Context Training via Dynamic Context Parallelism](https://arxiv.org/abs/2510.10620).
+
 ## Installation
 
 ### Using Docker (Recommended)
