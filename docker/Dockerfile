@@ -6,22 +6,22 @@ WORKDIR ${HOME}
 
 ########################### Install AWS dependencies ###########################
 
-ARG AWS
+# ARG AWS
 
-# Check AWS argument is set
-# AWS environment requires additional dependencies for its EFA network
-RUN if [ -z "$AWS" ]; then echo "Pls indicate if the build is for AWS with --build-arg AWS=true/false"; exit 1; fi
+# # Check AWS argument is set
+# # AWS environment requires additional dependencies for its EFA network
+# RUN if [ -z "$AWS" ]; then echo "Pls indicate if the build is for AWS with --build-arg AWS=true/false"; exit 1; fi
 
-# Copy install_aws_deps.sh in
-COPY install_aws_deps.sh ${HOME}/install_aws_deps.sh
+# # Copy install_aws_deps.sh in
+# COPY install_aws_deps.sh ${HOME}/install_aws_deps.sh
 
 # Update apt
 RUN apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub \
     && apt-get update
 
 # Install AWS dependencies if required
-RUN if [ "$AWS" = "true" ]; then bash ${HOME}/install_aws_deps.sh; fi
-ENV LD_LIBRARY_PATH=/opt/amazon/efa/lib:/opt/amazon/openmpi/lib:/opt/aws-ofi-nccl/lib:$LD_LIBRARY_PATH
+# RUN if [ "$AWS" = "true" ]; then bash ${HOME}/install_aws_deps.sh; fi
+# ENV LD_LIBRARY_PATH=/opt/amazon/efa/lib:/opt/amazon/openmpi/lib:/opt/aws-ofi-nccl/lib:$LD_LIBRARY_PATH
 
 ########################### Install DCP dependencies ###########################
 # Install conda
@@ -66,7 +66,7 @@ RUN cd flash-attention && pip install -e . --no-build-isolation
 
 # More dependencies
 RUN pip install mtkahypar kahypar ortools transformers redis tiktoken datasets pybind11
-RUN apt-get install -y redis
+RUN apt-get install -y redis openssh-server
 # Install orig version of flash-attn (used in baselines)
 # Note: --no-dependencies is important to avoid reinstalling the latest version of torch
 RUN pip install flash-attn==2.6.3 --no-build-isolation --no-dependencies
